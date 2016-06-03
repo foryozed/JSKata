@@ -1,1 +1,1 @@
-# JSKata
+# JavaScript Learning Project.
