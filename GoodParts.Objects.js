@@ -37,6 +37,52 @@ if (typeof Object.create !== 'function') {
 var germanyWorldCup = Object.create(qatarWorldCup);
 germanyWorldCup.changeHostCountry('Germany');
 
+//==== HANDLING THE 'this' KEYWORD - it depends on the function invocation pattern, these patterns are ================
+
+// 1-Method Invocation Pattern: the function is a property of an object, and invoked as object.foo(). 
+//   The function in this case is called 'method'. using 'this' inside methods will always refer to the containing object. 
+
+elvis.dance = function (songName) {
+    console.log(this.name + ' is singing ' + songName +
+        ' shaking his hips, twisting his ankles, and rocking the whole jail fantastically!');
+}
+
+// 2-Function Invocation Pattern: the function is NOT a property of an object, and invoked simply as foo(). 
+//  The function in this case is called 'function'. using 'this' inside it will always refer to the global object. 
+//  The book/materials indicates that this was a mistake in the design of the language, because if we have 
+//  an inner function of a function its 'this' will still refer to the 'this' of the outer function, the work around is like this:
+var obj;
+obj.boo = function() {
+    var self = this;
+    var foo = function() {
+        console.log(this); //prints the global object ( Window {external: Object, chrome: Object, document: document, true: Object, HIDE_TIMEOUT: 2000…})
+        console.log(self); //prints the object 'obj'
+    }
+    foo();
+};
+
+
+// 3-The Constructor Invocation Pattern: when a function is going to be invoked using the 'new' keyword, we call it 'constructor', and its name
+//      has to start with an upper case character. 'this' in constructors refers to the new object created by the new keyword.
+
+var Zoo = function(numberOfAnimals) {
+    this.animalCount = numberOfAnimals;
+    this.print = function() {
+        console.log(this.animalCount);
+    }
+}
+var columbusZoo = new Zoo(695);
+columbusZoo.print();
+
+// 4-Call and Apply: these are 2 functions used to invoke functions. The first parameter for both functions is the 'context',
+//   this keyword inside the function that will be invoked will always refer to this 'context' that we pass. Another difference is
+//   that apply passes arguments to the target function as an array, while call can pass them directly.
+
+elvis.dance.call(elvis, 'Hound Dog');
+elvis.dance.apply(elvis, ['Hound Dog']);
+
+
+
 //======= PROTPTYPES AND OTHER CONCEPTS LEARNED FROM THE STUDY MATERIALS =================================
 
 
@@ -86,47 +132,3 @@ delete xx.hoo;
 console.log(yy.hoo); //undefined
 
 
-
-//==== HANDLING THE 'this' KEYWORD - it depends on the function invocation pattern, these patterns are ================
-
-// 1-Method Invocation Pattern: the function is a property of an object, and invoked as object.foo(). 
-//   The function in this case is called 'method'. using 'this' inside methods will always refer to the containing object. 
-
-elvis.dance = function (songName) {
-    console.log(this.name + ' is singing ' + songName +
-        ' shaking his hips, twisting his ankles, and rocking the whole jail fantastically!');
-}
-
-// 2-Function Invocation Pattern: the function is NOT a property of an object, and invoked simply as foo(). 
-//  The function in this case is called 'function'. using 'this' inside it will always refer to the global object. 
-//  The book/materials indicates that this was a mistake in the design of the language, because if we have 
-//  an inner function of a function its 'this' will still refer to the 'this' of the outer function, the work around is like this:
-var obj;
-obj.boo = function() {
-    var self = this;
-    var foo = function() {
-        console.log(this); //prints the global object ( Window {external: Object, chrome: Object, document: document, true: Object, HIDE_TIMEOUT: 2000…})
-        console.log(self); //prints the object 'obj'
-    }
-    foo();
-};
-
-
-// 3-The Constructor Invocation Pattern: when a function is going to be invoked using the 'new' keyword, we call it 'constructor', and its name
-//      has to start with an upper case character. 'this' in constructors refers to the new object created by the new keyword.
-
-var Zoo = function(numberOfAnimals) {
-    this.animalCount = numberOfAnimals;
-    this.print = function() {
-        console.log(this.animalCount);
-    }
-}
-var columbusZoo = new Zoo(695);
-columbusZoo.print();
-
-// 4-Call and Apply: these are 2 functions used to invoke functions. The first parameter for both functions is the 'context',
-//   this keyword inside the function that will be invoked will always refer to this 'context' that we pass. Another difference is
-//   that apply passes arguments to the target function as an array, while call can pass them directly.
-
-elvis.dance.call(elvis, 'Hound Dog');
-elvis.dance.apply(elvis, ['Hound Dog']);
