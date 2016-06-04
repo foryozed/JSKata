@@ -37,7 +37,12 @@ if (typeof Object.create !== 'function') {
 var germanyWorldCup = Object.create(qatarWorldCup);
 germanyWorldCup.changeHostCountry('Germany');
 
-//==== HANDLING THE 'this' KEYWORD - it depends on the function invocation pattern, these patterns are ================
+
+
+
+//========= HANDLING THE 'this' KEYWORD -  ===================================================
+
+//the context of 'this' depends on the function invocation pattern, these patterns are:
 
 // 1-Method Invocation Pattern: the function is a property of an object, and invoked as object.foo(). 
 //   The function in this case is called 'method'. using 'this' inside methods will always refer to the containing object. 
