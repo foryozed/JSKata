@@ -1,2 +1,2 @@
-# JavaScript Learning Project.
-React & Redux
+# JavaScript OOP and the good parts - Learning.
+
